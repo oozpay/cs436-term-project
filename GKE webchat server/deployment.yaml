@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webchat-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webchat
+  template:
+    metadata:
+      labels:
+        app: webchat
+    spec:
+      containers:
+        - name: webchat
+          image: us-central1-docker.pkg.dev/webchat-gke/webchat-repo/webchat-app:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          env:
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"

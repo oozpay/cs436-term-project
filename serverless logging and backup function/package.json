@@ -1,0 +1,7 @@
+{
+  "name": "log-backup-function",
+  "version": "1.0.0",
+  "dependencies": {
+    "@google-cloud/storage": "^6.5.0"
+  }
+}
