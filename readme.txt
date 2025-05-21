@@ -1,3 +1,5 @@
+README IS NOT FINISHED YET
+
 Steps to recreate the cloud-native architecture:
 
 NOTE 1: Replace all placeholders in square brackets (e.g., `[PROJECT_ID]`) with your actual values.
