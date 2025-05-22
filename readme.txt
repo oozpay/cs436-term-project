@@ -130,7 +130,7 @@ gsutil uniformbucketlevelaccess set on gs://webchat-backups-1
 gsutil iam ch allUsers:objectCreator gs://webchat-backups-1
 gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
 
-8) create a shell script to upload logs to bucket:
+8) create a shell script in VM to upload logs to bucket:
 nano upload-log.sh
 
 SCRIPT CODE:
@@ -142,10 +142,10 @@ curl -X PUT --data-binary @"$FILE" \
   -H "Content-Type: text/plain" \
   "https://storage.googleapis.com/$BUCKET/$OBJECT"
 
-8) make the script executable:
+8) make the script executable in VM:
 chmod +x /home/[USER]/upload-log.sh
 
-9) automate script:
+9) automate script in VM:
 crontab -e
 add this line: 0 * * * * /home/[USER]/upload-log.sh 
 
@@ -153,11 +153,11 @@ add this line: 0 * * * * /home/[USER]/upload-log.sh
 
 Serverless function setup:
 
-1) Enable Cloud Functions and Cloud Storage APIs:
+1) Enable Cloud Functions and Cloud Storage APIs in cloud shell terminal:
 gcloud services enable cloudfunctions.googleapis.com
 gcloud services enable storage.googleapis.com
 
-2) locate "serverless logging and backup funcion" folder and deploy:
+2) locate "serverless logging and backup funcion" folder and deploy in local terminal:
 gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource webchat-backups-1 --trigger-event google.storage.object.finalize --entry-point backupLog --region us-central1-a
 
 3) verify deployment:
