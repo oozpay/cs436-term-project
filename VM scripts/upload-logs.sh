@@ -2,7 +2,7 @@
 
 FILE=~/message-logger/messages.log
 BUCKET=webchat-backups-1
-OBJECT=messages.log  # you can make this dynamic with timestamp if you want
+OBJECT=messages.log
 
 curl -X PUT --data-binary @"$FILE" \
   -H "Content-Type: text/plain" \
