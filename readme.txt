@@ -1,7 +1,7 @@
 Steps to recreate the cloud-native architecture:
 
 NOTE 1: Replace all placeholders in square brackets (e.g., `[PROJECT_ID]`) with your actual values.
-NOTE 2: Docker Desktop must be installed and running for deployment.
+NOTE 2: Docker Desktop and gcloud CLI must be installed and running for deployment.
 NOTE 3: Some commands should be run in your local terminal within the project directory, while others should be executed in the Cloud Shell terminal. Refer to the instructions in each step for guidance.
 
 GKE cluster setup:
