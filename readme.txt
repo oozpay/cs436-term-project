@@ -130,8 +130,8 @@ gsutil uniformbucketlevelaccess set on gs://webchat-backups-1
 gsutil iam ch allUsers:objectCreator gs://webchat-backups-1
 gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
 
-8) create a shell script in VM to upload logs to bucket:
-nano upload-log.sh
+8) create a shell script in VM home directory to upload logs to bucket:
+nano upload-logs.sh
 
 CODE FOR upload-logs.sh (can be found in "VM scripts" folder):
 #!/bin/bash
@@ -142,12 +142,14 @@ curl -X PUT --data-binary @"$FILE" \
   -H "Content-Type: text/plain" \
   "https://storage.googleapis.com/$BUCKET/$OBJECT"
 
-8) make the script executable in VM:
-chmod +x /home/[USER]/upload-log.sh
+9) make the script executable in VM:
+chmod +x /home/[USER]/upload-logs.sh
 
-9) automate script in VM:
+10) automate script in VM:
 crontab -e
-add this line: 0 * * * * /home/[USER]/upload-log.sh 
+
+add this line to schedule hourly backups: 
+0 * * * * /home/[USER]/upload-logs.sh 
 
 
 
