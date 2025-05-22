@@ -166,3 +166,11 @@ gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource webchat-
 gcloud functions logs read backupLog --region us-central1-a
 
 
+
+Locust load test:
+
+1) Locate "locust load test script" folder
+
+2) run the script in local terminal:
+locust -f locustfile.py
+
