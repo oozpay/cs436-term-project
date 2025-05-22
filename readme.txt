@@ -1,5 +1,3 @@
-README IS NOT FINISHED YET
-
 Steps to recreate the cloud-native architecture:
 
 NOTE 1: Replace all placeholders in square brackets (e.g., `[PROJECT_ID]`) with your actual values.
@@ -8,7 +6,7 @@ NOTE 3: Some commands should be run in your local terminal within the project di
 
 GKE cluster setup:
 
-1) Authenticate GCP account in local terminal:
+1) Locate "GKE webchat server" folder and authenticate GCP account in local terminal:
 gcloud auth login
 gcloud config set project [PROJECT_ID] 
 gcloud config set compute/zone us-central1-a 
@@ -46,6 +44,8 @@ kubectl apply -f hpa.yaml
 7) To access the webchat app, get External IP for the service in local terminal and paste it in browser:
 kubectl get service webchat-service
 
+
+
 Compute Engine VM setup:
 
 1) Create a VM instance in Compute Engine:
@@ -66,7 +66,7 @@ mkdir message-logger
 cd message-logger
 nano server.js
 
-CODE FOR server.js:
+CODE FOR server.js (can be found in "VM scripts" folder):
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -107,7 +107,7 @@ Configurations:
 	-Source IP ranges: 0.0.0.0/0
 	-Protocols and ports: Check Specified protocols, select TCP, and enter 3001
 
-6) get the External IP of message-logger-vm and replace [VM-IP] with that IP address in the following send message function in the GKE chat server code:
+6) get the External IP of message-logger-vm and replace [VM-IP] with that IP address in the server.js file in the "GKE webchat server" folder. relevant section in server.js listed below:
 socket.on('send message', async (msg) => {
   const messagePayload = {
     user: socket.username,
@@ -116,10 +116,51 @@ socket.on('send message', async (msg) => {
   };
 
   try {
-    await axios.post('http://[VM-IP]:3001/store-message', messagePayload);
+    await axios.post('http://[VM-IP]:3001/store-message', messagePayload); <------- insert IP address here
   } catch (err) {
     console.error('Failed to store message:', err.message);
   }
 
   io.emit('new message', messagePayload);
 });
+
+7) create a bucket in google cloud in cloud shell terminal and grant permissions for bucket:
+gsutil mb -p webchat-gke -l us-central1 gs://webchat-backups-1
+gsutil uniformbucketlevelaccess set on gs://webchat-backups-1
+gsutil iam ch allUsers:objectCreator gs://webchat-backups-1
+gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
+
+8) create a shell script to upload logs to bucket:
+nano upload-log.sh
+
+SCRIPT CODE:
+#!/bin/bash
+FILE=~/message-logger/messages.log
+BUCKET=webchat-backups-1
+OBJECT=messages.log  # you can make this dynamic with timestamp if you want
+curl -X PUT --data-binary @"$FILE" \
+  -H "Content-Type: text/plain" \
+  "https://storage.googleapis.com/$BUCKET/$OBJECT"
+
+8) make the script executable:
+chmod +x /home/[USER]/upload-log.sh
+
+9) automate script:
+crontab -e
+add this line: 0 * * * * /home/[USER]/upload-log.sh 
+
+
+
+Serverless function setup:
+
+1) Enable Cloud Functions and Cloud Storage APIs:
+gcloud services enable cloudfunctions.googleapis.com
+gcloud services enable storage.googleapis.com
+
+2) locate "serverless logging and backup funcion" folder and deploy:
+gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource webchat-backups-1 --trigger-event google.storage.object.finalize --entry-point backupLog --region us-central1-a
+
+3) verify deployment:
+gcloud functions logs read backupLog --region us-central1-a
+
+
