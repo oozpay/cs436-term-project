@@ -19,7 +19,7 @@ class WebChatUser(User):
 
         start = time.time()
         try:
-            self.sio.connect("http://34.172.33.101")  # No port needed since LoadBalancer exposes 80
+            self.sio.connect("http://34.172.33.101")  # insert webchat-service IP here
             self.connected = True
         except Exception as e:
             total = (time.time() - start) * 1000
