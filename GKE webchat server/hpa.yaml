@@ -7,8 +7,10 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: webchat-deployment
-  minReplicas: 2
-  maxReplicas: 5
+  # edit min and max replicas to match with the cluster
+  # keep in mind that one pod is reserved for redis, so maxReplicas should be one less than cluster max
+  minReplicas: 1
+  maxReplicas: 2
   metrics:
     - type: Resource
       resource:
