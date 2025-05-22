@@ -1,7 +1,7 @@
 Steps to recreate the cloud-native architecture:
 
 NOTE 1: Replace all placeholders in square brackets (e.g., `[PROJECT_ID]`) with your actual values.
-NOTE 2: Docker Desktop and gcloud CLI must be installed and running for deployment.
+NOTE 2: Docker Desktop and Cloud SDK must be installed and running for deployment.
 NOTE 3: Some commands should be run in your local terminal within the project directory, while others should be executed in the Cloud Shell terminal. Refer to the instructions in each step for guidance.
 
 GKE cluster setup:
@@ -133,11 +133,11 @@ gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
 8) create a shell script in VM to upload logs to bucket:
 nano upload-log.sh
 
-SCRIPT CODE:
+CODE FOR upload-logs.sh (can be found in "VM scripts" folder):
 #!/bin/bash
 FILE=~/message-logger/messages.log
 BUCKET=webchat-backups-1
-OBJECT=messages.log  # you can make this dynamic with timestamp if you want
+OBJECT=messages.log
 curl -X PUT --data-binary @"$FILE" \
   -H "Content-Type: text/plain" \
   "https://storage.googleapis.com/$BUCKET/$OBJECT"
