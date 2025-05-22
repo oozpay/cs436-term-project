@@ -47,10 +47,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // socket.on('send message', (msg) => {
-  //   io.emit('new message', { msg, user: socket.username });
-  // });
-
   socket.on('send message', async (msg) => {
     const messagePayload = {
       user: socket.username,
