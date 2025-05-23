@@ -171,6 +171,8 @@ Locust load test:
 
 1) Locate "locust load test script" folder
 
-2) run the script in local terminal:
+2) replace the IP address in the line "self.sio.connect("http://[IP]")" with webchat-service's external IP (port number isn't necessary since it will automatically use port 80)
+
+3) run the script in local terminal:
 locust -f locustfile.py
 
