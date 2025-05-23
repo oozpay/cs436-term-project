@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
     console.log('Sending message to VM:', messagePayload);
 
     try {
-      await axios.post('http://34.133.242.23:3001/store-message', messagePayload); // insert VM IP here, keep socket as 3001
+      await axios.post('http://34.133.242.23:3001/store-message', messagePayload); // insert VM external IP here, keep socket as 3001
     } catch (err) {
       console.error('Failed to store message:', err.message);
     }
