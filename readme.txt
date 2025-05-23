@@ -125,7 +125,7 @@ socket.on('send message', async (msg) => {
 });
 
 7) create a bucket in google cloud in cloud shell terminal and grant permissions for bucket:
-gsutil mb -p webchat-gke -l us-central1 gs://webchat-backups-1
+gsutil mb -p [PROJECT_ID] -l us-central1 gs://webchat-backups-1
 gsutil uniformbucketlevelaccess set on gs://webchat-backups-1
 gsutil iam ch allUsers:objectCreator gs://webchat-backups-1
 gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
