@@ -43,7 +43,9 @@ gcloud artifacts repositories create webchat-repo \
 ```
 
 ### 4) Get cluster credentials in local terminal:
-`gcloud container clusters get-credentials webchat-cluster`
+```
+gcloud container clusters get-credentials webchat-cluster
+```
 
 ### 5) Authenticate Docker to push, then build and push the Docker image in local terminal:
 ```
@@ -121,18 +123,26 @@ gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
 ```
 
 ### 8) create a shell script in VM home directory to upload logs to bucket:
-`nano upload-logs.sh`
+```
+nano upload-logs.sh
+```
 CODE FOR `upload-logs.sh` CAN BE FOUND IN `VM scripts` FOLDER
 
 
 ### 9) make the script executable in VM:
-`chmod +x /home/[USER]/upload-logs.sh`
+```
+chmod +x /home/[USER]/upload-logs.sh
+```
 
 ### 10) automate script in VM using cron command-line utility:
-`crontab -e`
+```
+crontab -e
+```
 
 add this line to schedule hourly backups: 
-`0 * * * * /home/[USER]/upload-logs.sh`
+```
+0 * * * * /home/[USER]/upload-logs.sh
+```
 
 
 
@@ -150,7 +160,9 @@ gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource webchat-
 ```
 
 ### 3) verify deployment:
-`gcloud functions logs read backupLog --region us-central1-a`
+```
+gcloud functions logs read backupLog --region us-central1-a
+```
 
 
 
@@ -161,4 +173,6 @@ gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource webchat-
 ### 2) replace the IP address in the line `self.sio.connect("http://[IP]")` with `webchat-service`'s external IP (port number isn't necessary since it will automatically use port 80)
 
 ### 3) run the script in local terminal:
-`locust -f locustfile.py`
+```
+locust -f locustfile.py
+```
