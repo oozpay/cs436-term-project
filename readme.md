@@ -63,7 +63,9 @@ kubectl apply -f hpa.yaml
 ```
 
 ### 7) To access the webchat app, get External IP for the service in local terminal and paste it in browser:
-`kubectl get service webchat-service`
+```
+kubectl get service webchat-service
+```
 
 
 
