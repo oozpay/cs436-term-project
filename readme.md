@@ -67,7 +67,7 @@ kubectl apply -f hpa.yaml
 
 ## Compute Engine VM setup:
 
-### 1) Create a VM instance in Compute Engine:
+### 1) Create a VM instance in Compute Engine->VM instances dashboard:
 ```
 Name: message-logger-vm
 Region/Zone: us-central1-a
@@ -90,7 +90,6 @@ mkdir message-logger
 cd message-logger
 nano server.js
 ```
-
 CODE FOR `server.js` CAN BE FOUND IN `VM scripts` FOLDER
 
 ### 4) Install Express in the message-logger directory and run the server:
@@ -123,7 +122,6 @@ gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
 
 ### 8) create a shell script in VM home directory to upload logs to bucket:
 `nano upload-logs.sh`
-
 CODE FOR `upload-logs.sh` CAN BE FOUND IN `VM scripts` FOLDER
 
 
