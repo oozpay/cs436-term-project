@@ -68,11 +68,13 @@ kubectl apply -f hpa.yaml
 ## Compute Engine VM setup:
 
 ### 1) Create a VM instance in Compute Engine:
+```
 Name: message-logger-vm
 Region/Zone: us-central1-a
 Machine type: e2-micro
 Boot disk: Ubuntu 22.04 LTS x86/64 (amd64)
 HTTP traffic: Allowed
+```
 
 ### 2) Install Node.js on the VM:
 ```
@@ -99,6 +101,7 @@ node server.js
 ```
 
 ### 5) Allow Firewall Access to Port 3001 in Google Cloud Console
+```
 -Go to VPC Network > Firewall Rules
 -Click Create Firewall Rule
 Configurations:
@@ -106,6 +109,7 @@ Configurations:
 	-Targets: All instances in the network
 	-Source IP ranges: 0.0.0.0/0
 	-Protocols and ports: Check Specified protocols, select TCP, and enter 3001
+```
 
 ### 6) In the `server.js` file located in the "GKE webchat server" folder, replace `[IP]` in the line `await axios.post('http://[IP]:3001/store-message', messagePayload);` with the External IP address of the `message-logger-vm` instance (keep the port number as 3001)
 
