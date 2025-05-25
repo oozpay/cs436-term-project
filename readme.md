@@ -108,11 +108,10 @@ nano server.js
 ```
 CODE FOR `server.js` CAN BE FOUND IN `VM scripts` FOLDER
 
-### 4) Install Express in the message-logger directory and run the server:
+### 4) Install Express in the message-logger directory:
 ```
 npm init -y
 npm install express
-node server.js
 ```
 
 ### 5) Allow Firewall Access to Port 3001 in Google Cloud Console
@@ -128,6 +127,7 @@ Configurations:
 
 ### 6) In the `server.js` file located in the "GKE webchat server" folder, replace `[IP]` in the line `await axios.post('http://[IP]:3001/store-message', messagePayload);` with the External IP address of the `message-logger-vm` instance (keep the port number as 3001). cluster needs to be redeployed after this (repeat steps 6 and 7 in the `GKE cluster setup` section)
 
+
 ### 7) create a bucket in google cloud in cloud shell terminal and grant permissions for bucket:
 ```
 gsutil mb -p [PROJECT_ID] -l us-central1 gs://webchat-backups-1
@@ -138,6 +138,7 @@ gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
 
 ### 8) create a shell script in VM home directory to upload logs to bucket:
 ```
+cd ..
 nano upload-logs.sh
 ```
 CODE FOR `upload-logs.sh` CAN BE FOUND IN `VM scripts` FOLDER
@@ -158,6 +159,11 @@ add this line to schedule hourly backups:
 0 * * * * /home/[USER]/upload-logs.sh
 ```
 
+### 11) locate `message-logger` folder and run the server (SERVER SHOULD BE RUNNING FOR THE SYSTEM TO FUNCTION)
+```
+cd message-logger
+node server.js
+```
 
 
 ## Serverless function setup:
