@@ -22,7 +22,13 @@ gcloud config set project [PROJECT_ID]
 gcloud config set compute/zone us-central1-a 
 ```
 
-### 2) Create cluster in cloud shell terminal:
+### 2) enable required services in cloud shell terminal:
+```
+gcloud services enable container.googleapis.com \
+    compute.googleapis.com \
+    iam.googleapis.com \
+```
+### 3) Create cluster in cloud shell terminal:
 ```
 gcloud container clusters create webchat-cluster \
   --zone=us-central1-a \
@@ -33,7 +39,7 @@ gcloud container clusters create webchat-cluster \
   --max-nodes=3
 ```
 
-### 3) Enable artifact registry and create and artifact registry in cloud shell terminal:
+### 4) Enable artifact registry and create and artifact registry in cloud shell terminal:
 ```
 gcloud services enable artifactregistry.googleapis.com
 gcloud artifacts repositories create webchat-repo \
@@ -42,19 +48,19 @@ gcloud artifacts repositories create webchat-repo \
   --description="Webchat container repo"
 ```
 
-### 4) Get cluster credentials in local terminal:
+### 5) Get cluster credentials in local terminal:
 ```
 gcloud container clusters get-credentials webchat-cluster
 ```
 
-### 5) Authenticate Docker to push, then build and push the Docker image in local terminal:
+### 6) Authenticate Docker to push, then build and push the Docker image in local terminal:
 ```
 gcloud auth configure-docker us-central1-docker.pkg.dev
 docker build -t us-central1-docker.pkg.dev/[PROJECT_ID]/webchat-repo/webchat-app:latest .
 docker push us-central1-docker.pkg.dev/[PROJECT_ID]/webchat-repo/webchat-app:latest
 ```
 
-### 6) Apply Kubernetes manifests in local terminal:
+### 7) Apply Kubernetes manifests in local terminal:
 ```
 kubectl apply -f redis.yaml
 kubectl apply -f deployment.yaml
@@ -62,7 +68,7 @@ kubectl apply -f service.yaml
 kubectl apply -f hpa.yaml
 ```
 
-### 7) To access the webchat app, get External IP for the service in local terminal and paste it in browser:
+### 8) To access the webchat app, get External IP for the service in local terminal and paste it in browser:
 ```
 kubectl get service webchat-service
 ```
