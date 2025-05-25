@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: webchat
-          image: us-central1-docker.pkg.dev/webchat-gke/webchat-repo/webchat-app:latest
+          image: us-central1-docker.pkg.dev/[PROJECT_ID]/webchat-repo/webchat-app:latest # replace [PROJECT_ID] with the actual project ID
           ports:
             - containerPort: 3000
           resources:
