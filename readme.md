@@ -22,13 +22,19 @@ gcloud config set project [PROJECT_ID]
 gcloud config set compute/zone us-central1-a 
 ```
 
-### 2) enable required services in cloud shell terminal:
+### 2) Open the `deployment.yaml` file located in the `GKE webchat server` folder, and update the container image path to match your Google Cloud project ID.
+Replace [PROJECT_ID] in the following line with your actual project ID: 
+```
+image: us-central1-docker.pkg.dev/[PROJECT_ID]/webchat-repo/webchat-app:latest
+```
+
+### 3) enable required services in cloud shell terminal:
 ```
 gcloud services enable container.googleapis.com \
     compute.googleapis.com \
     iam.googleapis.com \
 ```
-### 3) Create cluster in cloud shell terminal:
+### 4) Create cluster in cloud shell terminal:
 ```
 gcloud container clusters create webchat-cluster \
   --zone=us-central1-a \
@@ -39,7 +45,7 @@ gcloud container clusters create webchat-cluster \
   --max-nodes=3
 ```
 
-### 4) Enable artifact registry and create and artifact registry in cloud shell terminal:
+### 5) Enable artifact registry and create and artifact registry in cloud shell terminal:
 ```
 gcloud services enable artifactregistry.googleapis.com
 gcloud artifacts repositories create webchat-repo \
@@ -48,19 +54,19 @@ gcloud artifacts repositories create webchat-repo \
   --description="Webchat container repo"
 ```
 
-### 5) Get cluster credentials in local terminal:
+### 6) Get cluster credentials in local terminal:
 ```
 gcloud container clusters get-credentials webchat-cluster
 ```
 
-### 6) Authenticate Docker to push, then build and push the Docker image in local terminal:
+### 7) Authenticate Docker to push, then build and push the Docker image in local terminal:
 ```
 gcloud auth configure-docker us-central1-docker.pkg.dev
 docker build -t us-central1-docker.pkg.dev/[PROJECT_ID]/webchat-repo/webchat-app:latest .
 docker push us-central1-docker.pkg.dev/[PROJECT_ID]/webchat-repo/webchat-app:latest
 ```
 
-### 7) Apply Kubernetes manifests in local terminal:
+### 8) Apply Kubernetes manifests in local terminal:
 ```
 kubectl apply -f redis.yaml
 kubectl apply -f deployment.yaml
@@ -68,7 +74,7 @@ kubectl apply -f service.yaml
 kubectl apply -f hpa.yaml
 ```
 
-### 8) To access the webchat app, get External IP for the service in local terminal and paste it in browser:
+### 9) To access the webchat app, get External IP for the service in local terminal and paste it in browser:
 ```
 kubectl get service webchat-service
 ```
