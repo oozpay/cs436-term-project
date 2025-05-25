@@ -106,7 +106,7 @@ mkdir message-logger
 cd message-logger
 nano server.js
 ```
-CODE FOR `server.js` CAN BE FOUND IN `VM scripts` FOLDER
+CODE FOR `server.js` CAN BE FOUND IN `VM scripts` FOLDER. 
 
 ### 4) Install Express in the message-logger directory:
 ```
@@ -141,7 +141,7 @@ gsutil iam ch allUsers:objectViewer gs://[BUCKET_NAME]
 cd ..
 nano upload-logs.sh
 ```
-CODE FOR `upload-logs.sh` CAN BE FOUND IN `VM scripts` FOLDER
+CODE FOR `upload-logs.sh` CAN BE FOUND IN `VM scripts` FOLDER. UPDATE THE LINE `BUCKET=[BUCKET_NAME]` TO REFLECT THE ACTUAL NAME OF THE BUCKET.
 
 
 ### 9) make the script executable in VM:
