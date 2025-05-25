@@ -132,8 +132,7 @@ Configurations:
 ```
 gsutil mb -p [PROJECT_ID] -l us-central1 gs://[BUCKET_NAME]
 gsutil uniformbucketlevelaccess set on gs://[BUCKET_NAME]
-gsutil iam ch allUsers:objectCreator gs://[BUCKET_NAME]
-gsutil iam ch allUsers:objectViewer gs://[BUCKET_NAME]
+gsutil iam ch allUsers:objectAdmin gs://[BUCKET_NAME]
 ```
 
 ### 8) create a shell script in VM home directory to upload logs to bucket:
