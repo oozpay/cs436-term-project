@@ -120,7 +120,7 @@ Configurations:
 	-Protocols and ports: Check Specified protocols, select TCP, and enter 3001
 ```
 
-### 6) In the `server.js` file located in the "GKE webchat server" folder, replace `[IP]` in the line `await axios.post('http://[IP]:3001/store-message', messagePayload);` with the External IP address of the `message-logger-vm` instance (keep the port number as 3001)
+### 6) In the `server.js` file located in the "GKE webchat server" folder, replace `[IP]` in the line `await axios.post('http://[IP]:3001/store-message', messagePayload);` with the External IP address of the `message-logger-vm` instance (keep the port number as 3001). cluster needs to be redeployed after this (repeat steps 6 and 7 in the `GKE cluster setup` section)
 
 ### 7) create a bucket in google cloud in cloud shell terminal and grant permissions for bucket:
 ```
