@@ -33,7 +33,7 @@ gcloud services enable container.googleapis.com \
 gcloud container clusters create webchat-cluster \
   --zone=us-central1-a \
   --enable-ip-alias \
-  --num-nodes=1 \
+  --num-nodes=2 \
   --enable-autoscaling \
   --min-nodes=0 \
   --max-nodes=3
