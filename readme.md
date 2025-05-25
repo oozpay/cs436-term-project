@@ -83,7 +83,7 @@ kubectl get service webchat-service
 
 ## Compute Engine VM setup:
 
-### 1) Create a VM instance in Compute Engine->VM instances dashboard:
+### 1) Create a VM instance in Compute Engine->VM instances dashboard then SSH into the VM:
 ```
 Name: message-logger-vm
 Region/Zone: us-central1-a
