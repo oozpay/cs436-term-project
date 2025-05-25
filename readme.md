@@ -178,7 +178,15 @@ gcloud services enable cloudbuild.googleapis.com
 gcloud services enable eventarc.googleapis.com
 ```
 
-### 2) locate `serverless logging and backup funcion` folder and deploy in local terminal:
+### 2) grant permissions in cloud shell terminal
+```
+gcloud projects add-iam-policy-binding [PROJECT_ID] \
+  --member=serviceAccount:service-[PROJECT_NUMBER]@gs-project-accounts.iam.gserviceaccount.com \
+  --role=roles/pubsub.publisher
+```
+
+
+### 3) locate `serverless logging and backup funcion` folder and deploy in local terminal:
 ```
 gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource [BUCKET_NAME] --trigger-event google.storage.object.finalize --entry-point backupLog --region us-central1
 ```
