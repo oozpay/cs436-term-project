@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FILE=~/message-logger/messages.log
-BUCKET=webchat-backups-1
+BUCKET=[BUCKET_NAME] # insert actual bucket name here
 OBJECT=messages.log
 
 curl -X PUT --data-binary @"$FILE" \
