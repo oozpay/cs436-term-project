@@ -130,10 +130,10 @@ Configurations:
 
 ### 7) create a bucket in google cloud in cloud shell terminal and grant permissions for bucket:
 ```
-gsutil mb -p [PROJECT_ID] -l us-central1 gs://webchat-backups-1
-gsutil uniformbucketlevelaccess set on gs://webchat-backups-1
-gsutil iam ch allUsers:objectCreator gs://webchat-backups-1
-gsutil iam ch allUsers:objectViewer gs://webchat-backups-1
+gsutil mb -p [PROJECT_ID] -l us-central1 gs://[BUCKET_NAME]
+gsutil uniformbucketlevelaccess set on gs://[BUCKET_NAME]
+gsutil iam ch allUsers:objectCreator gs://[BUCKET_NAME]
+gsutil iam ch allUsers:objectViewer gs://[BUCKET_NAME]
 ```
 
 ### 8) create a shell script in VM home directory to upload logs to bucket:
@@ -176,7 +176,7 @@ gcloud services enable storage.googleapis.com
 
 ### 2) locate `serverless logging and backup funcion` folder and deploy in local terminal:
 ```
-gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource webchat-backups-1 --trigger-event google.storage.object.finalize --entry-point backupLog --region us-central1-a
+gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource [BUCKET_NAME] --trigger-event google.storage.object.finalize --entry-point backupLog --region us-central1-a
 ```
 
 ### 3) verify deployment:
