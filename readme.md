@@ -23,7 +23,7 @@ gcloud config set compute/zone us-central1-a
 ```
 
 ### 2) Open the `deployment.yaml` file located in the `GKE webchat server` folder, and update the container image path to match your Google Cloud project ID.
-Replace [PROJECT_ID] in the following line with your actual project ID: 
+Replace `[PROJECT_ID]` in the following line with your actual project ID: 
 ```
 image: us-central1-docker.pkg.dev/[PROJECT_ID]/webchat-repo/webchat-app:latest
 ```
@@ -74,7 +74,7 @@ kubectl apply -f service.yaml
 kubectl apply -f hpa.yaml
 ```
 
-### 9) To access the webchat app, get External IP for the service in local terminal and paste it in browser:
+### 9) To access the webchat app, get External IP for the service in local terminal:
 ```
 kubectl get service webchat-service
 ```
@@ -132,6 +132,8 @@ Configurations:
 ```
 gsutil mb -p [PROJECT_ID] -l us-central1 gs://[BUCKET_NAME]
 gsutil uniformbucketlevelaccess set on gs://[BUCKET_NAME]
+gsutil iam ch allUsers:objectCreator gs://[BUCKET_NAME]
+gsutil iam ch allUsers:objectViewer gs://[BUCKET_NAME]
 gsutil iam ch allUsers:objectAdmin gs://[BUCKET_NAME]
 ```
 
@@ -171,16 +173,14 @@ node server.js
 ```
 gcloud services enable cloudfunctions.googleapis.com
 gcloud services enable storage.googleapis.com
+gcloud services enable run.googleapis.com
+gcloud services enable cloudbuild.googleapis.com
+gcloud services enable eventarc.googleapis.com
 ```
 
 ### 2) locate `serverless logging and backup funcion` folder and deploy in local terminal:
 ```
-gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource [BUCKET_NAME] --trigger-event google.storage.object.finalize --entry-point backupLog --region us-central1-a
-```
-
-### 3) verify deployment:
-```
-gcloud functions logs read backupLog --region us-central1-a
+gcloud functions deploy backupLog --runtime nodejs18 --trigger-resource [BUCKET_NAME] --trigger-event google.storage.object.finalize --entry-point backupLog --region us-central1
 ```
 
 
